@@ -1,37 +1,55 @@
 // player will be x, or player 1 will be x
-
+// ===================
 // factory functions
+// ===================
+// players module 
+const throwError = 'seems to be a problem here cheif'
+
 function createPlayer(name){
     let userName = name;
     let score = 0;
-    let myMarker = 'x';
+    let marker = 'x';
 
     function getScore(){return score}; 
     function improveScore(){return score++};
-    function changeMark(){
-        console.log('working')
-        this.myMarker = 'o';
+    function changeMarker(){
+        switch(this.marker){
+            case 'x': this.marker = 'o'; break;
+            case 'o': this.marker = 'x'; break;
+            default: console.log(throwError);
+        }
     }
-    return {userName, score, myMarker, getScore, improveScore, changeMark}
+    return {userName, score, marker, getScore, improveScore, changeMarker}
     
 }
 
 const player1 = createPlayer('player1');
 const theComputer = createPlayer('theComputer');
-        theComputer.changeMark();
-player1.improveScore();
-player1.improveScore();
-theComputer.improveScore();
+        theComputer.changeMarker();
+// player1.improveScore();
+// player1.improveScore();
+// theComputer.improveScore();
+
+
+// =========
+// the game 
+// =========
+const theGame = (function(){
+    let currentGame = {};
+
+})
+
+
 
 console.log({
     player: player1.userName,
-    marker: player1.myMarker,
+    marker: player1.marker,
     score: player1.getScore()
 });
 
 console.log({
     player: theComputer.userName,
-    marker: theComputer.myMarker,
+    marker: theComputer.marker,
     score: theComputer.getScore()
 });
 
@@ -40,9 +58,9 @@ console.log({
 // ================== 
 // test changemark vv
 // ================== 
-// player1.changeMark();
+// player1.changeMarker();
 // console.log({
 //     player: player1.userName,
-//     myMarker: player1.myMarker,
+//     marker: player1.marker,
 //     score: player1.getScore()
 // });
