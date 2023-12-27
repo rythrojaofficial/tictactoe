@@ -16,20 +16,33 @@ function createPlayer(name){
     
 }
 
-const jared = createPlayer('jared');
-jared.improveScore();
-jared.improveScore();
-jared.improveScore();
+const player1 = createPlayer('player1');
+const theComputer = createPlayer('theComputer');
+        theComputer.changeMark();
+player1.improveScore();
+player1.improveScore();
+theComputer.improveScore();
 
 console.log({
-    player: jared.userName,
-    myMarker: jared.myMarker,
-    score: jared.getScore()
+    player: player1.userName,
+    marker: player1.myMarker,
+    score: player1.getScore()
 });
 
-jared.changeMark();
 console.log({
-    player: jared.userName,
-    myMarker: jared.myMarker,
-    score: jared.getScore()
+    player: theComputer.userName,
+    marker: theComputer.myMarker,
+    score: theComputer.getScore()
 });
+
+
+    
+// ================== 
+// test changemark vv
+// ================== 
+// player1.changeMark();
+// console.log({
+//     player: player1.userName,
+//     myMarker: player1.myMarker,
+//     score: player1.getScore()
+// });
