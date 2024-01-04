@@ -2,118 +2,137 @@
 // ===================
 // factory functions
 // ===================
-// players module 
+
 const throwError = 'seems to be a problem here cheif'
-
-function createPlayer(name){
-    let userName = name;
-    let score = 0;
-    let marker = 'x';
-    let plays = [];
-
-    function getScore(){return score}; 
-    function improveScore(){return score++};
-    function getPlays(){return plays};
-    function addPlays(spot){
-        this.plays.push(spot);
-        return plays;
-    }
-    function changeMarker(){
-        switch(this.marker){
-            case 'x': this.marker = 'o'; break;
-            case 'o': this.marker = 'x'; break;
-            default: console.log(throwError);
-        }
-    }
-    return {userName, score, marker, plays, getScore, improveScore, getPlays, addPlays, changeMarker}
-    
-}
-
-const player1 = createPlayer('player1');
-const theComputer = createPlayer('theComputer');
-        theComputer.changeMarker();
-// player1.improveScore();
-// player1.improveScore();
-// theComputer.improveScore();
+const isWork = "is worky"
 
 
 // =========
 // the game 
 // =========
 
-const theGame = (function(){
+// const theGame = (function(){
     let currentGame = {};
-
     
-    function playerRound(){
-        let playerChoice = parseInt(prompt('choose a spot on your numpad'));
-        return player1.addPlays(playerChoice);
-    }
 
+    // players factory 
+    function createPlayer(name){
+        let userName = name;
+        let score = 0;
+        let marker = 'x';
+        let plays = [];
+        
+        function improveScore(){return score++};
+        function addPlays(spot){
+            return this.plays.push(spot);
+        }
+        function changeMarker(){
+            switch(marker){
+                case 'x': this.marker = 'o'; break;
+                case 'o': this.marker = 'x'; break;
+                default: console.log(throwError);
+            }
+        }
+        return {plays, userName, marker, score, improveScore, addPlays, changeMarker}
+        
+    }
+    // create players
+    const player1 = createPlayer('player1');
+    const theComputer = createPlayer('theComputer');
+        theComputer.changeMarker();
+
+    // create the board factory
+    function createBoard(){
+        let spots = [1,2,3,4,5,6,7,8,9];
+        // let spotsLeft = spots.length;
+        
+        function getSpots(){return spots.length};
+        function removeSpots(played){
+            const index = spots.indexOf(played);
+            const x = spots.splice (index,1);
+        };
+    
+        return {spots, getSpots, removeSpots}
+    }
+    const theBoard = createBoard();
+    let playerChoice;
+    let computerChoice;
+        // listen for click 
+    let listener = document.getElementById("play").addEventListener('click', ()=>{
+        let input = parseInt(document.getElementById("player-selection").value)
+        playerRound(input);
+        computerRound();
+        render();
+        checkWinCondition();
+    });
+        
+    
+
+    function playerRound(playerChoice){
+        if (!player1.plays.includes(playerChoice)
+            && !theComputer.plays.includes(playerChoice)){
+            theBoard.removeSpots(playerChoice);
+            player1.addPlays(playerChoice);
+        }else {playerChoice = undefined;
+            alert('choose a spot not taken');}
+         
+    };
+    
     function computerRound(){
-        let computerChoice = Math.random
-    }
-    return{
-        currentGame, playerRound
-    }
-})()
-
-const theBoard = (function(){
-    let availableSpots = [1,2,3,4,5,6,7,8,9];
-    let spots = availableSpots.length;
-
-    
-    function getSpots(){return spots};
-    function available(){return availableSpots};
-    function removeSpots(selection){
-        const index = availableSpots.indexOf(selection);
-        const x = availableSpots.splice (index,1);
-        return availableSpots;
+        let computerRandom = Math.floor((Math.random() * theBoard.getSpots()));
+        computerChoice = theBoard.spots[computerRandom];
+        if (computerChoice !== undefined){
+            theBoard.removeSpots(computerChoice);
+            theComputer.addPlays(computerChoice);
+        }else console.log(throwError);
+        
     };
 
-    return {getSpots, available, removeSpots}
-})()
 
-const playerRound = (function(){
-    let playerChoice = parseInt(prompt('choose a spot on your numpad'));
-    if (!player1.getPlays().includes(playerChoice)
-        && !theComputer.getPlays().includes(playerChoice)){
-        return player1.addPlays(playerChoice);
-    }else playerChoice = parseInt(prompt('choose a spot not taken'));
-     
-})();
+    function render(){
+        console.log({
+            player: player1.userName,
+            marker: player1.marker,
+            score: player1.score,
+            plays: player1.plays
+        });
 
-const computerRound = (function(){
-    // produces number between 1 and 9
-    let computerChoice = Math.floor((Math.random() * 9) + 1);
-    if(!player1.getPlays().includes(computerChoice)
-    && !theComputer.getPlays().includes(computerChoice)){
-        return theComputer.addPlays(computerChoice);
+        console.log({
+            player: theComputer.userName,
+            marker: theComputer.marker,
+            score: theComputer.score,
+            plays: theComputer.plays
+        });
+
+        console.log(`player chose`);
+            console.log(player1.plays);
+        console.log(`computer chose`);
+            console.log(theComputer.plays);
+        console.log('available slots:')
+            console.log(theBoard.spots);
     }
+
+    function checkWinCondition(){
+        const gameEnd = 'thegame has ended';
+        const youWin = `you've won the game with ${player1.plays}`;
+        const youLose = `the computer has won the game with ${theComputer.plays}`;
+
+        if (theBoard.getSpots() === 0){
+            console.log(gameEnd);
+        }
+        
+        // if (player1.plays.includes()
+
+        
+    }
+
+   
+        
+    // })() 
     
-    
-})();
-theBoard.removeSpots(5);
 
 
 
-// player1.addPlays(2);
-// player1.addPlays(5);
-// player1.addPlays(8);
-console.log({
-    player: player1.userName,
-    marker: player1.marker,
-    score: player1.getScore(),
-    plays: player1.getPlays()
-});
-
-console.log({
-    player: theComputer.userName,
-    marker: theComputer.marker,
-    score: theComputer.getScore(),
-    plays: theComputer.getPlays()
-});
-console.log(theBoard.available());
 
     
 // ================== 
