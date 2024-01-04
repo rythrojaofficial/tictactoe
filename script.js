@@ -13,7 +13,9 @@ const isWork = "is worky"
 
 // const theGame = (function(){
     let currentGame = {};
-    
+    const gameEnd = 'the game has ended';
+    // const youWin = `you've won the game with ${player1.getPlays()}`;
+    // const youLose = `the computer has won the game with ${theComputer.getPlays()}`;
 
     // players factory 
     function createPlayer(name){
@@ -22,9 +24,11 @@ const isWork = "is worky"
         let marker = 'x';
         let plays = [];
         
+        function sortedPlays() {return getPlays().sort()}; 
+        function getPlays() {return plays};
         function improveScore(){return score++};
         function addPlays(spot){
-            return this.plays.push(spot);
+            return this.getPlays().push(spot);
         }
         function changeMarker(){
             switch(marker){
@@ -33,7 +37,7 @@ const isWork = "is worky"
                 default: console.log(throwError);
             }
         }
-        return {plays, userName, marker, score, improveScore, addPlays, changeMarker}
+        return {userName, marker, score, sortedPlays, getPlays, improveScore, addPlays, changeMarker}
         
     }
     // create players
@@ -63,16 +67,17 @@ const isWork = "is worky"
         playerRound(input);
         computerRound();
         render();
-        checkWinCondition();
     });
         
     
 
     function playerRound(playerChoice){
-        if (!player1.plays.includes(playerChoice)
-            && !theComputer.plays.includes(playerChoice)){
+        if (!player1.getPlays().includes(playerChoice)
+            && !theComputer.getPlays().includes(playerChoice)){
             theBoard.removeSpots(playerChoice);
             player1.addPlays(playerChoice);
+            checkSpotsCondition();
+            checkCombinations(player1);
         }else {playerChoice = undefined;
             alert('choose a spot not taken');}
          
@@ -84,6 +89,8 @@ const isWork = "is worky"
         if (computerChoice !== undefined){
             theBoard.removeSpots(computerChoice);
             theComputer.addPlays(computerChoice);
+            checkSpotsCondition();
+            checkCombinations(theComputer);
         }else console.log(throwError);
         
     };
@@ -94,38 +101,66 @@ const isWork = "is worky"
             player: player1.userName,
             marker: player1.marker,
             score: player1.score,
-            plays: player1.plays
+            plays: player1.getPlays()
         });
 
         console.log({
             player: theComputer.userName,
             marker: theComputer.marker,
             score: theComputer.score,
-            plays: theComputer.plays
+            plays: theComputer.getPlays()
         });
 
         console.log(`player chose`);
-            console.log(player1.plays);
+            console.log(player1.getPlays());
         console.log(`computer chose`);
-            console.log(theComputer.plays);
+            console.log(theComputer.getPlays());
         console.log('available slots:')
             console.log(theBoard.spots);
     }
 
-    function checkWinCondition(){
-        const gameEnd = 'thegame has ended';
-        const youWin = `you've won the game with ${player1.plays}`;
-        const youLose = `the computer has won the game with ${theComputer.plays}`;
-
+    function checkSpotsCondition(){
         if (theBoard.getSpots() === 0){
             console.log(gameEnd);
         }
-        
-        // if (player1.plays.includes()
-
-        
     }
 
+    function checkCombinations(thePlayer){
+        if (thePlayer.getPlays().length >= 3){
+            console.log(isWork);
+            directComparison(thePlayer);
+        }
+
+    }
+
+    function directComparison(thePlayer){
+        // win conditions 
+        const winCombinations = [
+            // horizontal
+            [1,2,3],
+            [4,5,6],
+            [7,8,9],
+            // vertical
+            [1,4,7],
+            [2,5,8],
+            [3,6,9],
+            // diagonal
+            [1,5,9],
+            [3,5,7]
+        ];
+        const winStrings = winCombinations.map((array)=> array.toString());
+        let playerString = thePlayer.sortedPlays().toString();
+        
+
+        for (let i = 0; i < winStrings.length; i++){
+            // console.log(winStrings[i]);
+            if(playerString === winStrings[i]){
+                // console.log(`${thePlayer} has won with ${thePlayer.sortedPlays}`)
+                console.log('weiner');
+                console.log(gameEnd);
+            }
+        }
+    }
    
         
     // })() 
