@@ -127,7 +127,6 @@ const isWork = "is worky"
 
     function checkCombinations(thePlayer){
         if (thePlayer.getPlays().length >= 3){
-            console.log(isWork);
             directComparison(thePlayer);
         }
 
@@ -150,11 +149,14 @@ const isWork = "is worky"
         ];
         const winStrings = winCombinations.map((array)=> array.toString());
         let playerString = thePlayer.sortedPlays().toString();
+    
         
 
         for (let i = 0; i < winStrings.length; i++){
-            // console.log(winStrings[i]);
-            if(playerString === winStrings[i]){
+            if(   playerString.match(winStrings[i][0])
+               && playerString.match(winStrings[i][1])
+               && playerString.match(winStrings[i][2]) 
+               ){
                 // console.log(`${thePlayer} has won with ${thePlayer.sortedPlays}`)
                 console.log('weiner');
                 console.log(gameEnd);
