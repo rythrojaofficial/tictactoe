@@ -18,55 +18,77 @@ const isWork = "is worky"
     // const youLose = `the computer has won the game with ${theComputer.getPlays()}`;
 
     // players factory 
-    function createPlayer(name){
-        let userName = name;
+    function createPlayer(name, mark){
         let score = 0;
-        let marker = 'x';
+        let marker;
+
+        if (mark){
+            marker = mark
+            }else  marker = 'x';
         let plays = [];
         
+        function getMarker(){return marker};
+        function getScore() {return score};
+        function userName() {return name};
         function sortedPlays() {return getPlays().sort()}; 
         function getPlays() {return plays};
         function improveScore(){return score++};
         function addPlays(spot){
             return this.getPlays().push(spot);
         }
+        function resetPlayer(){plays.length = 0};
         function changeMarker(){
             switch(marker){
                 case 'x': this.marker = 'o'; break;
                 case 'o': this.marker = 'x'; break;
                 default: console.log(throwError);
             }
+        
+        
         }
-        return {userName, marker, score, sortedPlays, getPlays, improveScore, addPlays, changeMarker}
+        
+        return {getMarker, getScore, sortedPlays, getPlays, userName, improveScore, addPlays, resetPlayer, changeMarker}
         
     }
+    9
     // create players
-    const player1 = createPlayer('player1');
-    const theComputer = createPlayer('theComputer');
-        theComputer.changeMarker();
+    const player1 = createPlayer('player1','x');
+    const theComputer = createPlayer('theComputer', 'o');
+        // theComputer.changeMarker();
 
     // create the board factory
     function createBoard(){
         let spots = [1,2,3,4,5,6,7,8,9];
         // let spotsLeft = spots.length;
         
-        function getSpots(){return spots.length};
+        function getSpots(){return spots};
+        function spotsLength(){return spots.length};
         function removeSpots(played){
             const index = spots.indexOf(played);
             const x = spots.splice (index,1);
         };
+        function resetSpots(){
+            spots.length = 0;
+            spots = [1,2,3,4,5,6,7,8,9];
+        };
     
-        return {spots, getSpots, removeSpots}
+        return {getSpots, spotsLength, removeSpots, resetSpots}
     }
+
     const theBoard = createBoard();
     let playerChoice;
     let computerChoice;
         // listen for click 
-    let listener = document.getElementById("play").addEventListener('click', ()=>{
+    let playButton = document.getElementById("play").addEventListener('click', ()=>{
         let input = parseInt(document.getElementById("player-selection").value)
         playerRound(input);
         computerRound();
         render();
+    });
+    let resetButton = document.getElementById("reset").addEventListener('click', ()=>{
+        player1.resetPlayer();
+        theComputer.resetPlayer();
+        theBoard.resetSpots();
     });
         
     
@@ -84,8 +106,8 @@ const isWork = "is worky"
     };
     
     function computerRound(){
-        let computerRandom = Math.floor((Math.random() * theBoard.getSpots()));
-        computerChoice = theBoard.spots[computerRandom];
+        let computerRandom = Math.floor((Math.random() * theBoard.spotsLength()));
+        computerChoice = theBoard.getSpots()[computerRandom];
         if (computerChoice !== undefined){
             theBoard.removeSpots(computerChoice);
             theComputer.addPlays(computerChoice);
@@ -98,16 +120,16 @@ const isWork = "is worky"
 
     function render(){
         console.log({
-            player: player1.userName,
-            marker: player1.marker,
-            score: player1.score,
+            player: player1.userName(),
+            marker: player1.getMarker(),
+            score: player1.getScore(),
             plays: player1.getPlays()
         });
 
         console.log({
-            player: theComputer.userName,
-            marker: theComputer.marker,
-            score: theComputer.score,
+            player: theComputer.userName(),
+            marker: theComputer.getMarker(),
+            score: theComputer.getScore(),
             plays: theComputer.getPlays()
         });
 
@@ -116,11 +138,11 @@ const isWork = "is worky"
         console.log(`computer chose`);
             console.log(theComputer.getPlays());
         console.log('available slots:')
-            console.log(theBoard.spots);
+            console.log(theBoard.getSpots());
     }
 
     function checkSpotsCondition(){
-        if (theBoard.getSpots() === 0){
+        if (theBoard.spotsLength() === 0){
             console.log(gameEnd);
         }
     }
@@ -154,12 +176,12 @@ const isWork = "is worky"
 
         for (let i = 0; i < winStrings.length; i++){
             if(   playerString.match(winStrings[i][0])
-               && playerString.match(winStrings[i][1])
-               && playerString.match(winStrings[i][2]) 
+               && playerString.match(winStrings[i][2])
+               && playerString.match(winStrings[i][4]) 
                ){
-                // console.log(`${thePlayer} has won with ${thePlayer.sortedPlays}`)
-                console.log('weiner');
-                console.log(gameEnd);
+                console.log(`${thePlayer.userName()} wins`);
+                thePlayer.improveScore();
+                console.log(`${thePlayer.userName()} score: ${thePlayer.getScore()}`)
             }
         }
     }
