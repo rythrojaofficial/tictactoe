@@ -76,20 +76,25 @@ const isWork = "is worky"
     }
 
     const theBoard = createBoard();
+    const userInput = document.getElementById('player-selection');
     let playerChoice;
     let computerChoice;
         // listen for click 
     let playButton = document.getElementById("play").addEventListener('click', ()=>{
-        let input = parseInt(document.getElementById("player-selection").value)
+        let input = parseInt(userInput.value)
         playerRound(input);
         computerRound();
         render();
+        userInput.value = '';
+        userInput.focus();
     });
-    let resetButton = document.getElementById("reset").addEventListener('click', ()=>{
+    let resetButton = document.getElementById("reset").addEventListener('click', resetGame);
+
+    function resetGame(){
         player1.resetPlayer();
         theComputer.resetPlayer();
         theBoard.resetSpots();
-    });
+    }
         
     
 
