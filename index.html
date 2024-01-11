@@ -9,9 +9,17 @@
 <body>
     <form action="#">
         <label for="selector">choose a spot on numpad</label>
+        <br>
         <input type="number" id="player-selection" name="selector" maxlength="1">
+        <br>
         <input type="button" id="play" value="play">
+        <input type="button" name="reset" id="reset" value="reset">
     </form>
+    <br>
+    <div id="scoreboard">
+        <div>player score: <span id="player-score">0</span></div>
+        <div>computer score: <span id="computer-score">0</span></div>
+    </div>
     
     
 </body>

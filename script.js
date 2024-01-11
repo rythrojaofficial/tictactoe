@@ -12,10 +12,11 @@ const isWork = "is worky"
 // =========
 
 // const theGame = (function(){
-    let currentGame = {};
     const gameEnd = 'the game has ended';
     // const youWin = `you've won the game with ${player1.getPlays()}`;
     // const youLose = `the computer has won the game with ${theComputer.getPlays()}`;
+    const displayPlayer = document.getElementById('player-score');
+    const displayComputer = document.getElementById('computer-score');
 
     // players factory 
     function createPlayer(name, mark){
@@ -47,14 +48,15 @@ const isWork = "is worky"
         
         }
         
-        return {getMarker, getScore, sortedPlays, getPlays, userName, improveScore, addPlays, resetPlayer, changeMarker}
+        return {getMarker, getScore, sortedPlays, getPlays, 
+            userName, improveScore, addPlays, resetPlayer, changeMarker}
         
     }
     9
     // create players
     const player1 = createPlayer('player1','x');
     const theComputer = createPlayer('theComputer', 'o');
-        // theComputer.changeMarker();
+        
 
     // create the board factory
     function createBoard(){
@@ -77,8 +79,8 @@ const isWork = "is worky"
 
     const theBoard = createBoard();
     const userInput = document.getElementById('player-selection');
-    let playerChoice;
-    let computerChoice;
+    // let playerChoice;
+    // let computerChoice;
         // listen for click 
     let playButton = document.getElementById("play").addEventListener('click', ()=>{
         let input = parseInt(userInput.value)
@@ -112,7 +114,7 @@ const isWork = "is worky"
     
     function computerRound(){
         let computerRandom = Math.floor((Math.random() * theBoard.spotsLength()));
-        computerChoice = theBoard.getSpots()[computerRandom];
+        let computerChoice = theBoard.getSpots()[computerRandom];
         if (computerChoice !== undefined){
             theBoard.removeSpots(computerChoice);
             theComputer.addPlays(computerChoice);
@@ -124,13 +126,14 @@ const isWork = "is worky"
 
 
     function render(){
+        displayPlayer.innerHTML = player1.getScore();
         console.log({
             player: player1.userName(),
             marker: player1.getMarker(),
             score: player1.getScore(),
             plays: player1.getPlays()
         });
-
+        displayComputer.innerHTML = theComputer.getScore();
         console.log({
             player: theComputer.userName(),
             marker: theComputer.getMarker(),
@@ -196,15 +199,3 @@ const isWork = "is worky"
     
 
 
-
-
-    
-// ================== 
-// test changemark vv
-// ================== 
-// player1.changeMarker();
-// console.log({
-//     player: player1.userName,
-//     marker: player1.marker,
-//     score: player1.getScore()
-// });
