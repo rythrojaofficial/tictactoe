@@ -198,4 +198,20 @@ const isWork = "is worky"
     // })() 
     
 
+// css html setup 
+const gameBoard = document.getElementById("game-board");
+const boardNodeList = gameBoard.querySelectorAll('div');
+const boardArray = Array.from(boardNodeList);
+    boardArray.forEach((element)=>{
+        element.classList.add('grid-item')
+    })
+    console.log(boardArray)
+
+
+
+
+// .forEach((element)=>{
+//     element.classList.add('grid-item');
+// })
+
 

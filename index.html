@@ -7,19 +7,40 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form action="#">
-        <label for="selector">choose a spot on numpad</label>
+    <div class="content">
+        <form action="#">
+            <label for="selector">choose a spot on numpad</label>
+            <br>
+            <input type="number" id="player-selection" name="selector" maxlength="1">
+            <br>
+            <input type="button" id="play" value="play">
+            <input type="button" name="reset" id="reset" value="reset">
+        </form>
+
         <br>
-        <input type="number" id="player-selection" name="selector" maxlength="1">
-        <br>
-        <input type="button" id="play" value="play">
-        <input type="button" name="reset" id="reset" value="reset">
-    </form>
-    <br>
-    <div id="scoreboard">
-        <div>player score: <span id="player-score">0</span></div>
-        <div>computer score: <span id="computer-score">0</span></div>
+        <div class="container">
+            <div id="scoreboard">
+                <div>player score: <span id="player-score">0</span></div>
+                <div>computer score: <span id="computer-score">0</span></div>
+            </div>
+        
+            <div id="game-board">
+                <div id="spot-7"></div>
+                <div id="spot-8"></div>
+                <div id="spot-9"></div>
+        
+                <div id="spot-4"></div>
+                <div id="spot-5"></div>
+                <div id="spot-6"></div>
+        
+                <div id="spot-1"></div>
+                <div id="spot-2"></div>
+                <div id="spot-3"></div>
+            </div>   
+        </div>
+        
     </div>
+    
     
     
 </body>

@@ -1,5 +1,52 @@
+*{
+    box-sizing: border-box;
+}
+
+.body,
+.content{
+    padding-left: 0px;
+    margin-left:0px;
+}
+
+:root{
+    --board-size: 15rem;
+    --off-white: rgb(231, 230, 223);
+    --board-color: rgb(138, 138, 216);
+    --grid-color: var(--off-white)
+}
+
+.content{
+    background-color: var(--off-white);
+    height: 100vh;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+
+
 #scoreboard {
+    width: var(--board-size);
     display: grid;
-    grid-template-columns: auto auto;
-    width: 50vw;
+    grid-template-columns: repeat(2, 1fr);
+    
+}
+
+#game-board{
+    height: var(--board-size);
+    width: var(--board-size);
+    background-color: var(--grid-color);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    row-gap: 2px;
+    column-gap: 2px;
+}
+
+.grid-item{
+    width: 100%;
+    background-color: var(--board-color);
 }
