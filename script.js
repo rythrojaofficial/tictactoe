@@ -85,8 +85,9 @@ const isWork = "is worky"
     let playButton = document.getElementById("play").addEventListener('click', ()=>{
         let input = parseInt(userInput.value)
         playerRound(input);
+        render(player1)
         computerRound();
-        render();
+        render(theComputer);
         userInput.value = '';
         userInput.focus();
     });
@@ -96,6 +97,10 @@ const isWork = "is worky"
         player1.resetPlayer();
         theComputer.resetPlayer();
         theBoard.resetSpots();
+        boardArray.forEach((el)=>{
+            el.innerText = '';
+
+        })
     }
         
     
@@ -125,19 +130,27 @@ const isWork = "is worky"
     };
 
 
-    function render(){
+    function render(player){
         displayPlayer.innerHTML = player1.getScore();
+
+        player.getPlays().forEach((element)=>{
+            let gridElement = document.getElementById('spot-'+element);
+            if (!gridElement.innerText){
+                gridElement.innerText = player.getMarker();}
+            })
+        
+
         console.log({
             player: player1.userName(),
             marker: player1.getMarker(),
-            score: player1.getScore(),
+            // score: player1.getScore(),
             plays: player1.getPlays()
         });
         displayComputer.innerHTML = theComputer.getScore();
         console.log({
             player: theComputer.userName(),
             marker: theComputer.getMarker(),
-            score: theComputer.getScore(),
+            // score: theComputer.getScore(),
             plays: theComputer.getPlays()
         });
 
