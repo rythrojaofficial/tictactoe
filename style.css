@@ -11,8 +11,8 @@
 :root{
     --board-size: 15rem;
     --off-white: rgb(231, 230, 223);
-    --board-color: rgb(138, 138, 216);
-    --grid-color: var(--off-white)
+    --board-color: rgb(211, 201, 145);
+    --grid-color: var(--off-white);
 }
 
 .content{
@@ -58,5 +58,15 @@
 img {
     width: calc(var(--board-size) * .225);
 }
+
+.o {
+    filter: invert(20%) sepia(243%) saturate(1576%) hue-rotate(-35deg) brightness(137%) contrast(73%);
+}
+
+
+.x{
+    filter: invert(20%) sepia(243%) saturate(1576%) hue-rotate(60deg) brightness(137%) contrast(73%);
+}
+
 
 
