@@ -35,6 +35,8 @@ const isWork = "is worky"
         function sortedPlays() {return getPlays().sort()}; 
         function getPlays() {return plays};
         function improveScore(){return score++};
+        function xMark() {return 'astrological-hinduism-symbol-svgrepo-com.svg'};
+        function oMark() {return 'gibbous-moon-svgrepo-com.svg'};
         function addPlays(spot){
             return this.getPlays().push(spot);
         }
@@ -50,6 +52,7 @@ const isWork = "is worky"
         }
         
         return {getMarker, getScore, sortedPlays, getPlays, 
+            xMark, oMark,
             userName, improveScore, addPlays, resetPlayer, changeMarker}
         
     }
@@ -137,8 +140,15 @@ const isWork = "is worky"
 
         player.getPlays().forEach((element)=>{
             let gridElement = document.getElementById('spot-'+element);
-            if (!gridElement.innerText){
-                gridElement.innerText = player.getMarker();}
+            let theMark = document.createElement('img');
+                theMark.classList.add(player.getMarker());
+                if (theMark.classList.contains('x')){
+                    theMark.src = "astrological-hinduism-symbol-svgrepo-com.svg"
+                }else if (theMark.classList.contains('o')){
+                    theMark.src = "gibbous-moon-svgrepo-com.svg"
+                }else throwError;
+            if (gridElement.innerHTML === ""){
+                gridElement.appendChild(theMark);}
             })
         
 
@@ -150,6 +160,7 @@ const isWork = "is worky"
         });
         console.log(`${player} chose`);
         console.log(player.getPlays());
+
         displayComputer.innerHTML = theComputer.getScore();
         // console.log({
         //     player: theComputer.userName(),

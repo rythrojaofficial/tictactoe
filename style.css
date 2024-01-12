@@ -47,9 +47,12 @@
 }
 
 .grid-item{
+    display: grid;
     width: 100%;
     background-color: var(--board-color);
-    border-radius: calc(var(--board-size) * 0.075 *);
+    border-radius: calc(var(--board-size) * 0.075);
+    align-items: center;
+    justify-items: center;
 }
 
 img {
