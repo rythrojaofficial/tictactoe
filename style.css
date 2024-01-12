@@ -49,4 +49,11 @@
 .grid-item{
     width: 100%;
     background-color: var(--board-color);
+    border-radius: calc(var(--board-size) * 0.075 *);
 }
+
+img {
+    width: calc(var(--board-size) * .225);
+}
+
+
